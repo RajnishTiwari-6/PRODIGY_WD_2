@@ -1,70 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tic Tac Toe</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="Portfolio of Rajnish Tiwari - B.Tech CSE student at KNIT Sultanpur. Passionate about Web Development and Data Science.">
+    <title>Rajnish Tiwari | Portfolio</title>
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rajnish Tiwari | Portfolio">
+    <meta property="og:description" content="Portfolio of Rajnish Tiwari - B.Tech CSE student at KNIT Sultanpur. Passionate about Web Development and Data Science.">
+    <meta property="og:site_name" content="Rajnish Tiwari Portfolio">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="helloji">
-    <h1 class="hello"> Welcome! to my Tic Tac Toe game </h1>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-content">
+            <a href="#home" class="logo">Rajnish Tiwari</a>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <div class="game-container">
-      <h1>Tic Tac Toe</h1>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="profile-img">
+                <div class="initials">RT</div>
+            </div>
+            <h1>Rajnish Tiwari</h1>
+            <p class="subtitle">B.Tech CSE Student | Data Science Enthusiast</p>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-graduation-cap"></i> KNIT Sultanpur</span>
+            </div>
+            <p class="tagline">
+                Passionate about building innovative web applications and leveraging data science for impactful solutions.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            </div>
+            <a href="#about" class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
 
-      <!-- Game Mode Controls -->
-      <div class="controls">
-        <label>
-          Mode:
-          <select id="mode">
-            <option value="pvp" selected>Player vs Player</option>
-            <option value="pvai">Player vs AI</option>
-          </select>
-        </label>
-        <label id="difficulty-label" style="display:none;">
-          Difficulty:
-          <select id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard" selected>Hard (Unbeatable)</option>
-          </select>
-        </label>
-      </div>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-user"></i>
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Hello! I'm Rajnish Tiwari, a passionate Computer Science student currently pursuing 
+                        my B.Tech from KNIT Sultanpur. My journey in technology began with a curiosity about how 
+                        things work and has evolved into a deep commitment to innovation and excellence.
+                    </p>
+                    <p>
+                        I specialize in web development and data science, combining my skills to build 
+                        intelligent, user-centric applications. Whether it's crafting elegant frontend 
+                        interfaces or developing sophisticated machine learning models, I approach every 
+                        project with dedication and creativity.
+                    </p>
+                    <p>
+                        Beyond academics, I'm an active contributor to open-source projects and love 
+                        participating in hackathons. I believe in continuous learning and staying updated 
+                        with the latest technological advancements to deliver cutting-edge solutions.
+                    </p>
+                </div>
+                <div class="quick-info">
+                    <div class="info-card">
+                        <h3>Quick Facts</h3>
+                        <div class="info-item">
+                            <h4>Location</h4>
+                            <p>Sultanpur, Uttar Pradesh</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>Focus</h4>
+                            <p>Web Development & Data Science</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>Availability</h4>
+                            <p>Open to Internships & Collaborations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <!-- Board -->
-      <div class="board" id="board">
-        <!-- Cells inserted by JS -->
-      </div>
+    <!-- Education Section -->
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Education</h2>
+            </div>
+            <div class="education-cards">
+                <div class="education-card">
+                    <div class="card-header">
+                        <h3>Bachelor of Technology in Computer Science</h3>
+                        <div class="duration">2024 - 2028</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="institution">Kamla Nehru Institute of Technology</p>
+                        <p class="location">Sultanpur, Uttar Pradesh</p>
+                        <ul class="highlights">
+                            <li>Specialization in Software Engineering and Algorithms</li>
+                            <li>CGPA: 8.5/10</li>
+                            <li>Active member of Coding Club and Tech Society</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <!-- Status -->
-      <p id="status">Player X's Turn</p>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-code"></i>
+                <h2>Skills</h2>
+            </div>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Express</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">RESTful APIs</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Data Science</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">Data Analysis</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Technologies</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <!-- Reset -->
-      <button id="reset">Reset Game</button>
-    </div>
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-laptop-code"></i>
+                <h2>Projects</h2>
+            </div>
+            <div class="project-grid">
+                <!-- Project cards will be dynamically added by JavaScript -->
+            </div>
+        </div>
+    </section>
 
-    <!-- Popup Modal -->
-    <div class="popup" id="popup">
-      <div class="popup-content">
-        <h2 id="popup-message">Player X Wins!</h2>
-        <button onclick="closePopup()">Close</button>
-      </div>
-    </div>
-  </div>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-paper-plane"></i>
+                <h2>Let's Connect</h2>
+            </div>
+            <p class="contact-subtitle">
+                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            </p>
+            <div class="social-links">
+                <a href="#" class="social-link" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="social-link" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="mailto:your.email@example.com" class="social-link" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
-  <script src="Script.js"></script>
-  <script>
-    // Show/hide difficulty when mode changes
-    document.getElementById('mode').addEventListener('change', function() {
-      const diffLabel = document.getElementById('difficulty-label');
-      if (this.value === 'pvai') {
-        diffLabel.style.display = 'inline-block';
-      } else {
-        diffLabel.style.display = 'none';
-      }
-    });
-  </script>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Rajnish Tiwari. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
