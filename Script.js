@@ -1,200 +1,153 @@
-// ======== Variables ========
-const boardEl = document.getElementById("board");
-const statusEl = document.getElementById("status");
-const resetBtn = document.getElementById("reset");
-const popup = document.getElementById("popup");
-const popupMsg = document.getElementById("popup-message");
-const modeEl = document.getElementById("mode");
-const diffEl = document.getElementById("difficulty");
-
-let board = Array(9).fill(null);
-let currentPlayer = "X";
-let gameActive = true;
-
-// Winning combinations
-const WIN_LINES = [
-  [0, 1, 2], [3, 4, 5], [6, 7, 8],
-  [0, 3, 6], [1, 4, 7], [2, 5, 8],
-  [0, 4, 8], [2, 4, 6]
+// Project data
+const projects = [
+    {
+        title: "Weather App",
+        description: "Real-time weather application with 7-day forecasts, interactive maps, and location-based alerts using OpenWeather API.",
+        tech: ["HTML", "CSS", "JavaScript", "APIs"],
+        github: "#",
+        demo: "#",
+        image: "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png"
+    },
+    {
+        title: "Data Visualization Dashboard",
+        description: "Interactive analytics dashboard with real-time data visualization, charts, and customizable widgets for business insights.",
+        tech: ["HTML", "CSS", "JavaScript", "D3.js"],
+        github: "#",
+        demo: "#",
+        image: "https://via.placeholder.com/350x200"
+    },
+    {
+        title: "Portfolio Website",
+        description: "Modern, responsive personal portfolio website with smooth animations and SEO optimization.",
+        tech: ["HTML", "CSS", "JavaScript"],
+        github: "#",
+        demo: "#",
+        image: "https://via.placeholder.com/350x200"
+    },
+    {
+        title: "E-Commerce Platform",
+        description: "Full-stack e-commerce application with user authentication, product catalog, shopping cart, and payment integration.",
+        tech: ["HTML", "CSS", "JavaScript", "Node.js", "MongoDB"],
+        github: "#",
+        demo: "#",
+        image: "https://via.placeholder.com/350x200"
+    },
+    {
+        title: "Task Management System",
+        description: "Collaborative task management app with real-time updates, team workspaces, and productivity analytics.",
+        tech: ["HTML", "CSS", "JavaScript", "Firebase"],
+        github: "#",
+        demo: "#",
+        image: "https://via.placeholder.com/350x200"
+    }
 ];
 
-// ======== Create Board ========
-function createBoard() {
-  boardEl.innerHTML = "";
-  for (let i = 0; i < 9; i++) {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-    cell.dataset.index = i;
-    cell.addEventListener("click", handleCellClick);
-    boardEl.appendChild(cell);
-  }
-}
-createBoard();
+// Load projects when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadProjects();
+    setupMobileMenu();
+    setupScrollAnimation();
+});
 
-// ======== Handle Click ========
-function handleCellClick(e) {
-  const index = e.target.dataset.index;
-
-  if (!gameActive || board[index]) return;
-
-  makeMove(index, currentPlayer);
-
-  if (checkWinner(board) || checkDraw(board)) {
-    endGame();
-    return;
-  }
-
-  // Switch turn
-  if (modeEl.value === "pvp") {
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    updateStatus();
-  } else if (modeEl.value === "pvai" && currentPlayer === "X") {
-    // Player vs AI
-    currentPlayer = "O";
-    updateStatus();
-    setTimeout(aiMove, 300); // delay for realism
-  }
-}
-
-// ======== Make Move ========
-function makeMove(index, player) {
-  board[index] = player;
-  const cell = boardEl.querySelector(`[data-index='${index}']`);
-  cell.textContent = player;
+// Function to load projects into the grid
+function loadProjects() {
+    const projectGrid = document.querySelector('.project-grid');
+    
+    projects.forEach(project => {
+        const projectCard = `
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>${project.title}</h3>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tech">
+                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    <div class="project-links">
+                        <a href="${project.demo}" target="_blank" class="demo-link">
+                            <i class="fas fa-external-link-alt"></i>
+                            Live Demo
+                        </a>
+                        <a href="${project.github}" target="_blank" class="code-link">
+                            <i class="fab fa-github"></i>
+                            View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        projectGrid.innerHTML += projectCard;
+    });
 }
 
-// ======== AI Move ========
-function aiMove() {
-  if (!gameActive) return;
+// Mobile menu functionality
+function setupMobileMenu() {
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        const icon = menuBtn.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
 
-  let move;
-  if (diffEl.value === "easy") move = randomMove(board);
-  else if (diffEl.value === "medium") move = winOrBlockMove(board) ?? randomMove(board);
-  else move = minimaxRoot(board, "O").index;
-
-  if (move != null) makeMove(move, "O");
-
-  if (checkWinner(board) || checkDraw(board)) {
-    endGame();
-    return;
-  }
-
-  currentPlayer = "X";
-  updateStatus();
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+    });
 }
 
-// ======== Winner Check ========
-function checkWinner(b) {
-  for (const [a, b1, c] of WIN_LINES) {
-    if (b[a] && b[a] === b[b1] && b[a] === b[c]) return b[a];
-  }
-  return null;
+// Navbar scroll effect
+function setupScrollAnimation() {
+    const navbar = document.getElementById('navbar');
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+        // Add shadow to navbar on scroll
+        if (window.scrollY > 20) {
+            navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        } else {
+            navbar.style.boxShadow = 'none';
+        }
+
+        // Update active nav link based on scroll position
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.scrollY >= sectionTop - 60) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').slice(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
 }
 
-function checkDraw(b) {
-  return b.every(cell => cell);
-}
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const headerOffset = 60;
+            const elementPosition = target.offsetTop;
+            const offsetPosition = elementPosition - headerOffset;
 
-// ======== End Game ========
-function endGame() {
-  gameActive = false;
-  const winner = checkWinner(board);
-  if (winner) {
-    popupMsg.textContent = `Player ${winner} Wins!`;
-  } else {
-    popupMsg.textContent = "It's a Draw!";
-  }
-  popup.style.display = "block";
-}
-
-// ======== Reset Game ========
-resetBtn.addEventListener("click", resetGame);
-function resetGame() {
-  board = Array(9).fill(null);
-  currentPlayer = "X";
-  gameActive = true;
-  createBoard();
-  updateStatus();
-  popup.style.display = "none";
-}
-
-// ======== Popup Close ========
-function closePopup() {
-  popup.style.display = "none";
-}
-
-// ======== Update Status ========
-function updateStatus() {
-  statusEl.textContent = `Player ${currentPlayer}'s Turn`;
-}
-
-// ======== AI Logic ========
-function emptyIndices(b) {
-  return b.map((v, i) => v ? null : i).filter(i => i !== null);
-}
-
-function randomMove(b) {
-  const empties = emptyIndices(b);
-  return empties.length ? empties[Math.floor(Math.random() * empties.length)] : null;
-}
-
-function winOrBlockMove(b) {
-  // Win
-  for (const i of emptyIndices(b)) {
-    const copy = b.slice();
-    copy[i] = "O";
-    if (checkWinner(copy) === "O") return i;
-  }
-  // Block
-  for (const i of emptyIndices(b)) {
-    const copy = b.slice();
-    copy[i] = "X";
-    if (checkWinner(copy) === "X") return i;
-  }
-  // Center or corner
-  if (b[4] == null) return 4;
-  const corners = [0, 2, 6, 8].filter(i => b[i] == null);
-  if (corners.length) return corners[0];
-  return null;
-}
-
-// ======== Minimax ========
-function minimaxRoot(b, player) {
-  let best = { score: -Infinity, index: null };
-  for (const i of emptyIndices(b)) {
-    b[i] = player;
-    const score = minimax(b, false, player, "X", 0, -Infinity, Infinity);
-    b[i] = null;
-    if (score > best.score) best = { score, index: i };
-  }
-  return best;
-}
-
-function minimax(b, isMax, me, opp, depth, alpha, beta) {
-  const winner = checkWinner(b);
-  if (winner === me) return 10 - depth;
-  if (winner === opp) return depth - 10;
-  if (checkDraw(b)) return 0;
-
-  if (isMax) {
-    let best = -Infinity;
-    for (const i of emptyIndices(b)) {
-      b[i] = me;
-      best = Math.max(best, minimax(b, false, me, opp, depth + 1, alpha, beta));
-      b[i] = null;
-      alpha = Math.max(alpha, best);
-      if (beta <= alpha) break;
-    }
-    return best;
-  } else {
-    let best = Infinity;
-    for (const i of emptyIndices(b)) {
-      b[i] = opp;
-      best = Math.min(best, minimax(b, true, me, opp, depth + 1, alpha, beta));
-      b[i] = null;
-      beta = Math.min(beta, best);
-      if (beta <= alpha) break;
-    }
-    return best;
-  }
-}
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
